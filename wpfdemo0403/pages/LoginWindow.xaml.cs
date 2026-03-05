@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,7 @@ namespace wpfdemo0403.pages
         public LoginWindow()
         {
             InitializeComponent();
+
         }
 
         private void authBtn_Click(object sender, RoutedEventArgs e)
@@ -39,9 +41,7 @@ namespace wpfdemo0403.pages
 
             try
             {
-                using (var db = new dostEntities())
-                {
-                    var dbUser = db.Пользователь.FirstOrDefault(u => u.Логин == login && u.Пароль == password);
+                    var dbUser = classes.database.Context.Пользователь.FirstOrDefault(u => u.Логин == login && u.Пароль == password);
 
                     if (dbUser != null)
                     {
@@ -67,7 +67,6 @@ namespace wpfdemo0403.pages
 
                         MessageBox.Show($"Добро пожаловать, {AppSession.CurrentUser.Fio}!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Переход
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
                         this.Close();
@@ -76,7 +75,7 @@ namespace wpfdemo0403.pages
                     {
                         MessageBox.Show("Неверный логин или пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }
+                
             }
             catch (Exception ex)
             {

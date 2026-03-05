@@ -18,6 +18,7 @@ namespace wpfdemo0403.database
     
     public partial class dostEntities : DbContext
     {
+       
         public dostEntities()
             : base("name=dostEntities")
         {
