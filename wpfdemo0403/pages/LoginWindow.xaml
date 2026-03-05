@@ -1,0 +1,24 @@
+﻿<Window x:Class="wpfdemo0403.pages.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfdemo0403.pages"
+        mc:Ignorable="d"
+        Title="Окно входа - Авторизация" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
+            <Image Source="/Images/picture.png" Height="80" Width="80" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Авторизация" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBox x:Name="loginTxt" Text="Логин" Padding="5" Margin="0,0,0,10" GotFocus="loginTxt_GotFocus"/>
+            <TextBox x:Name="passTxt" Text="Пароль" Padding="5" Margin="0,0,0,20" GotFocus="passTxt_GotFocus"/>
+
+            <Button x:Name="authBtn" Content="Войти" Height="35" Margin="0,0,0,10" Click="authBtn_Click"/>
+
+            <Button x:Name="guestBtn" Content="Войти как гость" Height="35" Click="guestBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

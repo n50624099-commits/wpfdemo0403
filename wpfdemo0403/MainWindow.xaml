@@ -1,0 +1,28 @@
+﻿<Window x:Class="wpfdemo0403.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfdemo0403"
+        mc:Ignorable="d"
+        Title="Просмотр товаров" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
+                    <TextBlock x:Name="fioTxt" Text="ФИО Пользователя" VerticalAlignment="Center" Margin="0,0,15,0" FontWeight="Bold"/>
+                    <Button x:Name="changeUserBtn" Content="Сменить пользователя"  Click="changeUserBtn_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <TextBlock Grid.Row="1" Text=" список товаров" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Gray"/>
+    </Grid>
+</Window>
