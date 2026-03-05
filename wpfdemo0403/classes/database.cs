@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace wpfdemo0403.classes
 {
-    internal class database
+    public static class database
     {
+
     }
 }

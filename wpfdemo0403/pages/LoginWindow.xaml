@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:wpfdemo0403.pages"
         mc:Ignorable="d"
         Title="Окно входа - Авторизация" Height="450" Width="400"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/pages/Icon.JPG">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Width="250" Grid.ColumnSpan="2" Margin="75,0,0,0">
             <Image Source="/Images/picture.png" Height="80" Width="80" Margin="0,0,0,20"/>
 
             <TextBlock Text="Авторизация" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
