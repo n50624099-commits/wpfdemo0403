@@ -25,5 +25,31 @@ namespace wpfdemo0403.database
         public int Количество_на_складе { get; set; }
         public string Описание { get; set; }
         public byte[] Фото { get; set; }
+
+        public string FullImagePath
+        {
+            get
+            {
+                
+                
+                return string.IsNullOrEmpty(this.Фото?.ToString())
+                    ? "/Images/picture.png"
+                    : $"/Images/{this.Фото}";
+            }
+        }
+
+        
+        public decimal Цена_со_скидкой
+        {
+            get
+            {
+                if (decimal.TryParse(Цена, out decimal priceDecimal))
+                {
+                    decimal discount = (decimal)Скидка;
+                    return priceDecimal * (1 - discount / 100);
+                }
+                return 0; 
+            }
+        }
     }
 }

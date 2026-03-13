@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfdemo0403.pages"
         mc:Ignorable="d"
-        Title="Окно входа - Авторизация" Height="450" Width="400"
+        Title="ООО Обувь - Авторизация" Height="450" Width="400"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/pages/Icon.JPG">
     <Grid>
         <Grid.ColumnDefinitions>

@@ -4,25 +4,102 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfdemo0403"
+        xmlns:Convertors="clr-namespace:wpfdemo0403.Convertors" 
         mc:Ignorable="d"
         Title="Просмотр товаров" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Convertors:DiscountNBackgConvertor x:Key="DiscountToBackgroundConverter"/>
+        <Convertors:StockToBackgroundConverter x:Key="StockToBackgroundConverter"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
-            <Grid>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
-                    <TextBlock x:Name="fioTxt" Text="ФИО Пользователя" VerticalAlignment="Center" Margin="0,0,15,0" FontWeight="Bold"/>
-                    <Button x:Name="changeUserBtn" Content="Сменить пользователя"  Click="changeUserBtn_Click"/>
-                </StackPanel>
-            </Grid>
+        <Border Grid.Row="0" Background="{StaticResource BgAdditional}" BorderBrush="Black" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
+                <TextBlock x:Name="txtCurrentUser" Text="ФИО Пользователя" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,15,0"/>
+                <Button x:Name="btnExitUser" Content="Выйти" Style="{StaticResource BaseBtnStyle}" Click="btnExitUser_Click"/>
+            </StackPanel>
         </Border>
 
-        <TextBlock Grid.Row="1" Text=" список товаров" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Gray"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="icProducts" Margin="10">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" Padding="5"
+                                Background="{Binding Количество_на_складе, Converter={StaticResource StockToBackgroundConverter}}">
+
+                            <Grid Background="{Binding Скидка, Converter={StaticResource DiscountToBackgroundConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding FullImagePath}" Width="120" Height="120" VerticalAlignment="Center" Margin="5"/>
+
+                                <Grid Grid.Column="1" Margin="10,5,5,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{Binding Наименование}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding Описание}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
+                                        <TextBlock Text="Производитель: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Производитель}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,0,0">
+                                        <TextBlock Text="Цена: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Цена}" Foreground="Red" TextDecorations="Strikethrough" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding Цена_со_скидкой, StringFormat={}{0:0.00} руб.}" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Скидка:" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Скидка, StringFormat={}{0}%}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0,1,0,0">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchText" Width="150" VerticalAlignment="Center" TextChanged="txtSearchText_TextChanged"/>
+
+                <TextBlock Text="Производитель:" VerticalAlignment="Center" Margin="15,5,5,5"/>
+                <ComboBox x:Name="cmbПроизводитель" Width="150" VerticalAlignment="Center" SelectionChanged="cmbПроизводитель_SelectionChanged"/>
+
+                <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="15,5,5,5"/>
+                <ComboBox x:Name="cmbСортировка" Width="120" VerticalAlignment="Center" SelectionChanged="cmbСортировка_SelectionChanged">
+                    <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                    <ComboBoxItem Content="Сначала дешевые"/>
+                    <ComboBoxItem Content="Сначала дорогие"/>
+                </ComboBox>
+            </WrapPanel>
+        </Border>
     </Grid>
 </Window>
