@@ -41,14 +41,14 @@ namespace wpfdemo0403
 
                
                 var manufacturers = _allProducts
-                    .Where(p => !string.IsNullOrEmpty(p.Производитель))
-                    .Select(p => p.Производитель)
+                    .Where(p => !string.IsNullOrEmpty(p.Поставщик))
+                    .Select(p => p.Поставщик)
                     .Distinct()
                     .ToList();
 
                 manufacturers.Insert(0, "Все");
-                cmbПроизводитель.ItemsSource = manufacturers;
-                cmbПроизводитель.SelectedIndex = 0;
+                cmbManufacturer.ItemsSource = manufacturers;
+                cmbManufacturer.SelectedIndex = 0;
 
                 ApplyFilters();
             }
@@ -60,10 +60,13 @@ namespace wpfdemo0403
 
         private void ApplyFilters()
         {
-            if (_allProducts == null) return;
+            if (_allProducts == null)
+            {
+                return;
+            }
 
             string searchText = txtSearchText.Text?.ToLower().Trim() ?? "";
-            string selectedManufacturer = cmbПроизводитель.SelectedItem?.ToString();
+            string selectedManufacturer = cmbManufacturer.SelectedItem?.ToString();
 
             var query = _allProducts.AsEnumerable();
 
@@ -78,7 +81,7 @@ namespace wpfdemo0403
             
             if (!string.IsNullOrEmpty(selectedManufacturer) && selectedManufacturer != "Все")
             {
-                query = query.Where(p => p.Производитель == selectedManufacturer);
+                query = query.Where(p => p.Поставщик == selectedManufacturer);
             }
 
             _filteredProducts = query.ToList();
@@ -87,24 +90,32 @@ namespace wpfdemo0403
 
         private void ApplySort()
         {
-            if (cmbСортировка.SelectedItem is ComboBoxItem selectedItem)
+            if (_filteredProducts == null) return;
+
+            
+            if (rbAsc.IsChecked == true)
             {
-                string sortText = selectedItem.Content.ToString();
-
-                switch (sortText)
-                {
-                    case "Сначала дешевые":
-                        _filteredProducts = _filteredProducts.OrderBy(p => p.Цена_со_скидкой).ToList();
-                        break;
-                    case "Сначала дорогие":
-                        _filteredProducts = _filteredProducts.OrderByDescending(p => p.Цена_со_скидкой).ToList();
-                        break;
-                }
+                
+                _filteredProducts = _filteredProducts.OrderBy(p => p.Наименование).ToList();
             }
-
-           
+            else if (rbDesc.IsChecked == true)
+            {
+                
+                _filteredProducts = _filteredProducts.OrderByDescending(p => p.Наименование).ToList();
+            }
+            
             icProducts.ItemsSource = null;
             icProducts.ItemsSource = _filteredProducts;
+        }
+
+        
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            
+            if (IsLoaded)
+            {
+                ApplySort();
+            }
         }
 
         private void txtSearchText_TextChanged(object sender, TextChangedEventArgs e)
@@ -112,15 +123,11 @@ namespace wpfdemo0403
             ApplyFilters();
         }
 
-        private void cmbПроизводитель_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbManufacturer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ApplyFilters();
         }
 
-        private void cmbСортировка_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ApplySort();
-        }
 
         private void btnExitUser_Click(object sender, RoutedEventArgs e)
         {

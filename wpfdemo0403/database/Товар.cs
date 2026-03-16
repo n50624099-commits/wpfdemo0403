@@ -30,11 +30,9 @@ namespace wpfdemo0403.database
         {
             get
             {
-                
-                
                 return string.IsNullOrEmpty(this.Фото?.ToString())
-                    ? "/Images/picture.png"
-                    : $"/Images/{this.Фото}";
+                    ? "/images/picture.png"
+                    : $"/images/{this.Фото}";
             }
         }
 
